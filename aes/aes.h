@@ -53,6 +53,13 @@ int aes_encrypt_cbc_mac(const BYTE in[],      // plaintext
                         int keysize,          // Bit length of the key, 128, 192, or 256
                         const BYTE iv[]);     // IV, must be AES_BLOCK_SIZE bytes long
 
+int aes_decrypt_cbc(const BYTE in[], 
+                    size_t in_len, 
+                    BYTE out[], 
+                    const WORD key[], 
+                    int keysize, 
+                    const BYTE iv[]);
+
 ///////////////////
 // AES - CTR
 ///////////////////
