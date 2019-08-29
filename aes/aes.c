@@ -1,8 +1,5 @@
 /*********************************************************************
 * Filename:   aes.c
-* Author:     Brad Conte (brad AT bradconte.com)
-* Copyright:
-* Disclaimer: This code is presented "as is" without any guarantees.
 * Details:    This code is the implementation of the AES algorithm and
               the CTR, CBC, and CCM modes of operation it can be used in.
                AES is, specified by the NIST in in publication FIPS PUB 197,
