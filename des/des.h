@@ -1,8 +1,5 @@
 /*********************************************************************
 * Filename:   des.h
-* Author:     Brad Conte (brad AT bradconte.com)
-* Copyright:
-* Disclaimer: This code is presented "as is" without any guarantees.
 * Details:    Defines the API for the corresponding DES implementation.
               Note that encryption and decryption are defined by how
               the key setup is performed, the actual en/de-cryption is
@@ -14,6 +11,7 @@
 
 /*************************** HEADER FILES ***************************/
 #include <stddef.h>
+#include <stdio.h>
 
 /****************************** MACROS ******************************/
 #define DES_BLOCK_SIZE 8                // DES operates on 8 bytes at a time

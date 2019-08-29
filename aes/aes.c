@@ -423,7 +423,7 @@ int aes_decrypt_ccm(const BYTE ciphertext[], WORD ciphertext_len, const BYTE ass
 	if (ciphertext_len <= mac_len)
 		return(FALSE);
 
-	buf = (BYTE*)malloc(assoc_len + ciphertext_len /*ciphertext_len = plaintext_len + mac_len*/ + 48);
+	buf = (BYTE*)malloc(assoc_len + ciphertext_len + 48);	/*ciphertext_len = plaintext_len + mac_len*/
 	if (! buf)
 		return(FALSE);
 
