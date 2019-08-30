@@ -15,6 +15,15 @@
 #include "md5.h"
 
 /*********************** FUNCTION DEFINITIONS ***********************/
+void print_hex(BYTE str[], int len)
+{
+	int idx;
+
+	for(idx = 0; idx < len; idx++)
+		printf("%02x", str[idx]);
+}
+
+
 int md5_test()
 {
 	BYTE text1[] = {""};
@@ -32,26 +41,33 @@ int md5_test()
 	md5_update(&ctx, text1, strlen(text1));
 	md5_final(&ctx, buf);
 	pass = pass && !memcmp(hash1, buf, MD5_BLOCK_SIZE);
-
+	printf("\nhash1	:");
+	print_hex(buf,MD5_BLOCK_SIZE);
+	
 	// Note the MD5 object can be reused.
 	md5_init(&ctx);
 	md5_update(&ctx, text2, strlen(text2));
 	md5_final(&ctx, buf);
 	pass = pass && !memcmp(hash2, buf, MD5_BLOCK_SIZE);
-
+	printf("\nhash2	:");
+	print_hex(buf,MD5_BLOCK_SIZE);
+	
 	// Note the data is being added in two chunks.
 	md5_init(&ctx);
 	md5_update(&ctx, text3_1, strlen(text3_1));
 	md5_update(&ctx, text3_2, strlen(text3_2));
 	md5_final(&ctx, buf);
 	pass = pass && !memcmp(hash3, buf, MD5_BLOCK_SIZE);
-
+	printf("\nhash3	:");
+	print_hex(buf,MD5_BLOCK_SIZE);
+	
 	return(pass);
 }
 
 int main()
 {
-	printf("MD5 tests: %s\n", md5_test() ? "SUCCEEDED" : "FAILED");
+	printf("\n** MD5 tests BEGIN.");
+	printf("\n** MD5 tests: %s\n", md5_test() ? "SUCCEEDED." : "FAILED.");
 
 	return(0);
 }
