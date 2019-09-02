@@ -1,8 +1,5 @@
 /*********************************************************************
 * Filename:   sha1_test.c
-* Author:     Brad Conte (brad AT bradconte.com)
-* Copyright:
-* Disclaimer: This code is presented "as is" without any guarantees.
 * Details:    Performs known-answer tests on the corresponding SHA1
 	          implementation. These tests do not encompass the full
 	          range of available test vectors, however, if the tests
