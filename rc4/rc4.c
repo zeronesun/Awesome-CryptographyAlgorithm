@@ -1,8 +1,7 @@
-#include<stdio.h>
-// #include<random>
-#include<time.h>
-#include<string.h>
-#define MAX 65534
+#include <stdio.h>
+#include <memory.h>
+#include "rc4.h"
+
 
 int S[256]; //向量S
 char T[256];    //向量T
@@ -101,10 +100,9 @@ void create_key_stream(char *text, int textLength)
 }
 
 
-
-int main()
-{   
-        char text[] = "14564561313213215665423";
-    Rc4EncryptText(text);
-    return 0;
-}
+// int main()
+// {   
+//     char text[] = "14564561313213215665423";
+//     Rc4EncryptText(text);
+//     return 0;
+// }
