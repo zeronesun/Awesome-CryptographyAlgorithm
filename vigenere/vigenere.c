@@ -104,6 +104,7 @@ bool vigenere_encode(char *key, char *source, char *dest)
     }
 
     dest[strlen(source)] = '\0';
+
     return true;
 }
 
@@ -125,7 +126,9 @@ bool vigenere_decode(char *key, char *source, char *dest)
             tempKey = key;
         }
     }
+
     dest[strlen(source)] = '\0';
+
     return true;
 }
 
