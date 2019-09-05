@@ -75,12 +75,14 @@ int main(int argc, char **argv)
     memset(P, 0, sizeof(P));
     memset(P2, 0, sizeof(P2));
     memset(C, 0, sizeof(C));
-
     strncpy(P, argv[1], sizeof(P));
+
     int K = atoi(argv[2]);
     caesar_encode(P, C, K);
     printf("the ciphertext is \n%s\n", C); /// 输出密文
+
     caesar_decode(C, P2, K);
     printf("decode ciphertext is\n%s\n", P2); /// 输出解码明文
+
     return 0;
 }
