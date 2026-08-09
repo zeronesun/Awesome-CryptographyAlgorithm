@@ -41,7 +41,7 @@
 
 ```bash
 # 顶层:构建全部 demo 并运行单元测试
-make build
+make
 make test
 
 # 单个模块(以 caesar 为例)
