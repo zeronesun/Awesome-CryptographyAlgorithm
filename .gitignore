@@ -1,0 +1,38 @@
+# --- C build artifacts ---
+*.o
+*.a
+*.so
+*.dll
+*.exe
+demo-test
+build/
+/bin/
+/cmake-build-*/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.virtualenv/
+.pytest_cache/
+.mypy_cache/
+dist/
+.coverage
+htmlcov/
+
+# --- Java (Maven) ---
+target/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# --- Project data (CodeBuddy) ---
+.codebuddy/
+
+# --- Editors / OS ---
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
