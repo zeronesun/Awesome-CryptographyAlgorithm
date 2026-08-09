@@ -1,11 +1,15 @@
-SRC	=$(wildcard *.c)
-OBJS	=$(patsubst %.c,%.o,$(SRC))
-CC	= gcc
-TARGET  = demo-test
+CC = gcc
+CFLAGS = -Wall -Wextra -std=c11
 
-$(TARGET):$(OBJS)
-	$(CC) -o $(TARGET) $(OBJS)
+TARGET = demo-test
+SRC = $(wildcard *.c)
 
-.PHONY:clean
+.PHONY: all demo-test clean
+
+all: $(TARGET)
+
+$(TARGET): $(SRC)
+	$(CC) $(CFLAGS) -o $@ $(SRC)
+
 clean:
-	rm -rf  *.o $(TARGET)
+	rm -f $(TARGET)
