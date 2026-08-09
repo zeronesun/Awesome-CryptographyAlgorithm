@@ -12,12 +12,7 @@ jobs:
       - name: Build all C modules
         run: make -C c
       - name: Run KAT tests
-        run: |
-          for m in aes des md2 md5 rc4 sha1 sha256; do
-            echo "=== Testing $m ==="
-            cd c/$m && make && ./demo-test || exit 1
-            cd ../..
-          done
+        run: make -C c test
 
   python-tests:
     runs-on: ubuntu-latest
