@@ -2,7 +2,7 @@
 
 """
 凯撒密码（纯 Python 教学版）
-字母偏移：f(a) = (a + key) % 26（处理大小写），非字母保留为空格
+字母偏移：f(a) = (a + key) % 26（处理大小写），非字母原样保留
 """
 
 import sys
@@ -14,7 +14,7 @@ def caesar_encode_single(src_char: str, key: int) -> str:
     elif 'A' <= src_char <= 'Z':
         return chr((ord(src_char) - ord('A') + key) % 26 + ord('A'))
     else:
-        return ' '
+        return src_char
 
 def caesar_decode_single(src_char: str, key: int) -> str:
     """解密单个字符"""
@@ -25,7 +25,7 @@ def caesar_decode_single(src_char: str, key: int) -> str:
         offset = ord(src_char) - key
         return chr(offset if offset >= ord('A') else offset + 26)
     else:
-        return ' '
+        return src_char
 
 def caesar_encode(plain: str, key: int) -> str:
     """加密整个字符串"""

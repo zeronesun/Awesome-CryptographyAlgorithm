@@ -30,8 +30,8 @@
 | SHA-256           | ✅ | ✅ | ✅ | ✅ |
 | DES               | ✅ | ✅ | ✅ | ✅ |
 | AES               | ✅ | ✅ | ✅ | ✅ |
-| MD2               | ✅ | - | - | - |
-| HMAC-SHA256       | - | - | ✅ | - |
+| MD2               | ✅ | ✅ | - | ✅ |
+| HMAC-SHA256       | ✅ | ✅ | ✅ | ✅ |
 
 > `simple/` 为不依赖任何第三方库的手写实现,便于理解算法细节;`stdlib/` 演示标准库用法。
 
@@ -40,8 +40,9 @@
 ### C
 
 ```bash
-# 顶层:构建全部 demo 并运行单元测试
+# 顶层:构建 C demo、打包 Java、运行 Python 测试
 make
+# 运行全部自测(C KAT / Java JUnit / Python pytest)
 make test
 
 # 单个模块(以 caesar 为例)
