@@ -33,9 +33,9 @@ void md5_transform(MD5_CTX *ctx, const BYTE data[])
 {
 	WORD a, b, c, d, m[16], i, j;
 
-	// MD5 specifies big endian byte order, but this implementation assumes a little
-	// endian byte order CPU. Reverse all the bytes upon input, and re-reverse them
-	// on output (in md5_final()).
+	// MD5 processes 32-bit words in little-endian byte order. On a little-endian
+	// CPU we byte-swap each word on input and swap back in md5_final(), so the
+	// resulting digest bytes are emitted in the correct (little-endian) sequence.
 	for (i = 0, j = 0; i < 16; ++i, j += 4)
 		m[i] = (data[j]) + (data[j + 1] << 8) + (data[j + 2] << 16) + (data[j + 3] << 24);
 

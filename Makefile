@@ -1,7 +1,7 @@
 # Awesome-CryptographyAlgorithm 顶层调度
 #
 # 用法:
-#   make             构建全部(C demo / Java 包 / Python 安装)
+#   make             构建 C demo / 打包 Java / 运行 Python 测试
 #   make test        运行全部自测(C KAT / Java JUnit / Python pytest)
 #   make c|java|python   单独处理某一语言
 #   make clean       清理各语言构建产物
