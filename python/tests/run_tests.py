@@ -21,6 +21,8 @@ from simple import rc4 as s_rc4
 from simple import des as s_des
 from simple import aes as s_aes
 from simple import base64 as s_base64
+from simple import hmac_sha256 as s_hmac
+from simple import md2 as s_md2
 
 import hashlib
 import base64 as std_base64
@@ -46,6 +48,10 @@ def run_all():
     long = b"A" * 1000
     check("sha256(long)", s_sha256.sha256_hex(long),
           hashlib.sha256(long).hexdigest(), fails)
+
+    # MD2 (RFC 1319 known-answer test; Python hashlib 不支持 MD2)
+    check("md2(empty)", s_md2.md2_hex(b""), "8350e5a3e24c153df2275c9f80692773", fails)
+    check("md2(abc)", s_md2.md2_hex(b"abc"), "da853b0d3f88d99b30283a69e6ded6bb", fails)
 
     # 古典密码: 往返一致性
     enc = s_caesar.caesar_encode("Hello, World!", 7)
@@ -84,7 +90,8 @@ def run_all():
     key, msg = b"secret", b"message"
     want = std_hmac.new(key, msg, hashlib.sha256).hexdigest()
     from stdlib import hmac_sha256 as h
-    check("hmac_sha256", h.hmac_sha256_hex(key, msg), want, fails)
+    check("hmac_sha256 (stdlib)", h.hmac_sha256_hex(key, msg), want, fails)
+    check("hmac_sha256 (simple)", s_hmac.hmac_sha256_hex(key, msg), want, fails)
 
     return fails
 
