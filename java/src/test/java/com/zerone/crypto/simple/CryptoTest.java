@@ -56,6 +56,25 @@ public class CryptoTest {
     }
 
     @Test
+    public void testMD2() {
+        assertEquals("8350e5a3e24c153df2275c9f80692773",
+                MD2.hex("".getBytes(StandardCharsets.UTF_8)));
+        assertEquals("da853b0d3f88d99b30283a69e6ded6bb",
+                MD2.hex("abc".getBytes(StandardCharsets.UTF_8)));
+    }
+
+    @Test
+    public void testHmacSHA256() {
+        byte[] key = new byte[20];
+        for (int i = 0; i < key.length; i++) key[i] = 0x0b;
+        assertEquals("b0344c61d8db38535ca8afceaf0bf12b881dc200c9833da726e9376c2e32cff7",
+                HmacSHA256.hex(key, "Hi There".getBytes(StandardCharsets.UTF_8)));
+        assertEquals("5bdcc146bf60754e6a042426089575c75a003f089d2739839dec58b964ec3843",
+                HmacSHA256.hex("Jefe".getBytes(StandardCharsets.UTF_8),
+                        "what do ya want for nothing?".getBytes(StandardCharsets.UTF_8)));
+    }
+
+    @Test
     public void testDES() {
         byte[] key = hex("133457799BBCDFF1");
         byte[] pt = hex("0123456789ABCDEF");

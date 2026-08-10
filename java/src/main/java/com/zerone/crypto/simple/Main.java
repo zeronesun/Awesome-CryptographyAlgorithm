@@ -17,6 +17,11 @@ public class Main {
 
         byte[] rc4 = RC4.encrypt(text.getBytes(StandardCharsets.UTF_8), "secret".getBytes());
         System.out.println("RC4(hex): " + bytesToHex(rc4));
+
+        System.out.println("MD2: " + MD2.hex(text.getBytes(StandardCharsets.UTF_8)));
+        System.out.println("HMAC-SHA256: "
+                + HmacSHA256.hex("key".getBytes(StandardCharsets.UTF_8),
+                                 text.getBytes(StandardCharsets.UTF_8)));
     }
 
     private static String bytesToHex(byte[] b) {
