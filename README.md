@@ -7,10 +7,21 @@
 
 ```
 .
-├── c/                 # C 实现(每个算法一个目录,自带 Makefile)
-│   ├── aes des md2 md5 rc4 sha1 sha256 base64 caesar vigenere
+├── c/                 # C 实现（每个算法一个目录，自带 Makefile）
+│   ├── aes
+│   ├── base64
+│   ├── caesar
+│   ├── chacha20
+│   ├── des
+│   ├── hmac
+│   ├── md2
+│   ├── md5
+│   ├── rc4
+│   ├── sha1
+│   ├── sha256
+│   └── vigenere
 ├── python/
-│   ├── simple/        # 纯 Python 手写实现(教学目的)
+│   ├── simple/        # 纯 Python 手写实现（教学目的）
 │   ├── stdlib/        # 基于标准库(hashlib/base64)的封装
 │   └── tests/         # Python 已知答案测试
 ├── java/              # Maven 工程 (com.zerone.crypto.simple)
@@ -30,7 +41,7 @@
 | SHA-256           | ✅ | ✅ | ✅ | ✅ |
 | DES               | ✅ | ✅ | ✅ | ✅ |
 | AES               | ✅ | ✅ | ✅ | ✅ |
-| MD2               | ✅ | ✅ | - | ✅ |
+| MD2               | ✅ | ✅ | ✅ | ✅ |
 | HMAC-SHA256       | ✅ | ✅ | ✅ | ✅ |
 | ChaCha20          | ✅ | ✅ | ✅ | ✅ |
 

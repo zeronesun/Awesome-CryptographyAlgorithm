@@ -38,17 +38,11 @@ public final class ChaCha20 {
 
     private static void doubleRound(final int[] state) {
         // Column rounds
-        for (int i = 0; i < 2; i++) {
-            quarterRound(state, 0, 4, 8,12);
-            quarterRound(state, 1, 5, 9,13);
-            quarterRound(state, 2, 6,10,14);
-            quarterRound(state, 3, 7,11,15);
-        }
+        quarterRound(state, 0, 4, 8,12);
+        quarterRound(state, 1, 5, 9,13);
+        quarterRound(state, 2, 6,10,14);
+        quarterRound(state, 3, 7,11,15);
         // Diagonal rounds
-        quarterRound(state, 0, 5,10,15);
-        quarterRound(state, 1, 6,11,12);
-        quarterRound(state, 2, 7, 8,13);
-        quarterRound(state, 3, 4, 9,14);
         quarterRound(state, 0, 5,10,15);
         quarterRound(state, 1, 6,11,12);
         quarterRound(state, 2, 7, 8,13);
