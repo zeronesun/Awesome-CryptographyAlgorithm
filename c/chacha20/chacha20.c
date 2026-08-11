@@ -24,21 +24,15 @@ static void chacha20_quarterround(uint32_t *a, uint32_t *b, uint32_t *c, uint32_
     *c += *d; *b ^= *c; *b = (*b << 7)  | (*b >> 25);
 }
 
-/* ChaCha20 双轮函数（10 次 double round = 20 轮） — RFC 7539 Section 2.1 */
+/* ChaCha20 双轮函数（2 列轮 + 2 对角轮 = 8 次 QR） — RFC 7539 Section 2.1 */
 static void chacha20_double_round(chacha20_state *s)
 {
     /* Column rounds */
-    for (int i = 0; i < 2; i++) {
-        chacha20_quarterround(&s->state[0], &s->state[4], &s->state[8], &s->state[12]);
-        chacha20_quarterround(&s->state[1], &s->state[5], &s->state[9], &s->state[13]);
-        chacha20_quarterround(&s->state[2], &s->state[6], &s->state[10], &s->state[14]);
-        chacha20_quarterround(&s->state[3], &s->state[7], &s->state[11], &s->state[15]);
-    }
+    chacha20_quarterround(&s->state[0], &s->state[4], &s->state[8], &s->state[12]);
+    chacha20_quarterround(&s->state[1], &s->state[5], &s->state[9], &s->state[13]);
+    chacha20_quarterround(&s->state[2], &s->state[6], &s->state[10], &s->state[14]);
+    chacha20_quarterround(&s->state[3], &s->state[7], &s->state[11], &s->state[15]);
     /* Diagonal rounds */
-    chacha20_quarterround(&s->state[0], &s->state[5], &s->state[10], &s->state[15]);
-    chacha20_quarterround(&s->state[1], &s->state[6], &s->state[11], &s->state[12]);
-    chacha20_quarterround(&s->state[2], &s->state[7],  &s->state[8],  &s->state[13]);
-    chacha20_quarterround(&s->state[3], &s->state[4],  &s->state[9],  &s->state[14]);
     chacha20_quarterround(&s->state[0], &s->state[5], &s->state[10], &s->state[15]);
     chacha20_quarterround(&s->state[1], &s->state[6], &s->state[11], &s->state[12]);
     chacha20_quarterround(&s->state[2], &s->state[7],  &s->state[8],  &s->state[13]);
@@ -94,5 +88,40 @@ void chacha20_crypt_oneshot(const uint8_t key32[32],
                             size_t msglen,
                             uint8_t *out)
 {
-    return;  /* 占位；实际见下方 C 实现 */
+    chacha20_state init;
+    memcpy(&init.state[0], CHACHA20_SIGMA, 4 * sizeof(uint32_t));
+    memcpy(&init.state[4], key32, 32);
+    init.state[12] = counter;
+    memcpy(&init.state[13], nonce, 12);
+
+    size_t offset = 0;
+    uint8_t block[64];
+    while (offset < msglen) {
+        /* 生成一个 64 字节的 keystream 块 */
+        chacha20_state s;
+        memcpy(&s, &init, sizeof(s));
+        for (int i = 0; i < 10; i++) {
+            chacha20_double_round(&s);
+        }
+        for (int i = 0; i < 16; i++) {
+            s.state[i] += init.state[i];
+        }
+        /* 序列化为 64 字字节小端 */
+        for (int i = 0; i < 16; i++) {
+            uint32_t x = s.state[i];
+            block[4*i+0] = (uint8_t)(x);
+            block[4*i+1] = (uint8_t)(x >> 8);
+            block[4*i+2] = (uint8_t)(x >> 16);
+            block[4*i+3] = (uint8_t)(x >> 24);
+        }
+
+        /* XOR keystream 块到输出 */
+        size_t step = (msglen - offset) > 64 ? 64 : (msglen - offset);
+        for (size_t i = 0; i < step; i++) {
+            out[offset + i] = msg[offset + i] ^ block[i];
+        }
+        offset += step;
+        /* 更新 counter，准备下一块 */
+        init.state[12]++;
+    }
 }

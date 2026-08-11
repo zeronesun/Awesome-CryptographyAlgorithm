@@ -26,18 +26,13 @@ def _quarterround(a: int, b: int, c: int, d: int) -> tuple[int, int, int, int]:
     return a, b, c, d
 
 def _double_round(state: list[int]) -> None:
-    """ChaCha20 双轮（2 × column + 2 × diagonal）"""
+    """ChaCha20 双轮（column + diagonal） = 8 次 quarter-round"""
     # Column rounds
-    for i in range(2):
-        state[0], state[4], state[8], state[12] = _quarterround(state[0], state[4], state[8], state[12])
-        state[1], state[5], state[9], state[13] = _quarterround(state[1], state[5], state[9], state[13])
-        state[2], state[6], state[10], state[14] = _quarterround(state[2], state[6], state[10], state[14])
-        state[3], state[7], state[11], state[15] = _quarterround(state[3], state[7], state[11], state[15])
+    state[0], state[4], state[8], state[12] = _quarterround(state[0], state[4], state[8], state[12])
+    state[1], state[5], state[9], state[13] = _quarterround(state[1], state[5], state[9], state[13])
+    state[2], state[6], state[10], state[14] = _quarterround(state[2], state[6], state[10], state[14])
+    state[3], state[7], state[11], state[15] = _quarterround(state[3], state[7], state[11], state[15])
     # Diagonal rounds
-    state[0], state[5], state[10], state[15] = _quarterround(state[0], state[5], state[10], state[15])
-    state[1], state[6], state[11], state[12] = _quarterround(state[1], state[6], state[11], state[12])
-    state[2], state[7], state[8],  state[13] = _quarterround(state[2], state[7], state[8],  state[13])
-    state[3], state[4], state[9],  state[14] = _quarterround(state[3], state[4], state[9],  state[14])
     state[0], state[5], state[10], state[15] = _quarterround(state[0], state[5], state[10], state[15])
     state[1], state[6], state[11], state[12] = _quarterround(state[1], state[6], state[11], state[12])
     state[2], state[7], state[8],  state[13] = _quarterround(state[2], state[7], state[8],  state[13])

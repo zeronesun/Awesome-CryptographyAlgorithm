@@ -28,13 +28,13 @@
 | Base64 | 编码 | [algorithms/base64.md](algorithms/base64.md) | ✅ | ✅ | ✅ | ✅ |
 | RC4  | 流密码 | [algorithms/rc4.md](algorithms/rc4.md) | ✅ | ✅ | ✅ | ✅ |
 | ChaCha20 (RFC 7539) | 流密码 · 现代推荐 | [algorithms/chacha20.md](algorithms/chacha20.md) | ✅ | ✅ | ✅ | ✅ |
-| MD2   | 哈希 | [algorithms/md2.md](algorithms/md2.md) | ✅ | ✅ | — | ✅ |
+| MD2   | 哈希 | [algorithms/md2.md](algorithms/md2.md) | ✅ | ✅ | ✅ | ✅ |
 | MD5   | 哈希 | [algorithms/md5.md](algorithms/md5.md) | ✅ | ✅ | ✅ | ✅ |
 | SHA-1 | 哈希 | [algorithms/sha1.md](algorithms/sha1.md) | ✅ | ✅ | ✅ | ✅ |
 | SHA-256 | 哈希 | [algorithms/sha256.md](algorithms/sha256.md) | ✅ | ✅ | ✅ | ✅ |
 | HMAC-SHA256 | 消息认证 | [algorithms/hmac.md](algorithms/hmac.md) | ✅ | ✅ | ✅ | ✅ |
-| DES（含3DES）| 分组密码 · 64-bit | [algorithms/des.md](algorithms/des.md) | ✅ | ✅ | — | ✅ |
-| AES（128/192/256）| 分组密码 · 128-bit | [algorithms/aes.md](algorithms/aes.md) | ✅ | ✅ | — | ✅ |
+| DES（含3DES）| 分组密码 · 64-bit | [algorithms/des.md](algorithms/des.md) | ✅ | ✅ | ✅ | ✅ |
+| AES（128/192/256）| 分组密码 · 128-bit | [algorithms/aes.md](algorithms/aes.md) | ✅ | ✅ | ✅ | ✅ |
 
 ## 安全性分级
 
