@@ -1,6 +1,6 @@
 CC      ?= gcc
 CFLAGS  ?= -std=c11 -O2 -Wall -Wextra
-MODULES := aes des md2 md5 rc4 sha1 sha256 base64 caesar vigenere hmac
+MODULES := aes des md2 md5 rc4 sha1 sha256 base64 caesar vigenere hmac chacha20
 
 all $(MODULES):
 	$(MAKE) -C $@ CC="$(CC)" CFLAGS="$(CFLAGS)"
