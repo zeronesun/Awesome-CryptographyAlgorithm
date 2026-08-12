@@ -62,7 +62,6 @@ def md2(data: bytes) -> bytes:
     """计算 MD2 摘要,返回 16 字节(bytes)。"""
     state = [0] * 48
     checksum = [0] * 16
-    data = [0] * 16
 
     m = _pad(data)
     for off in range(0, len(m), 16):

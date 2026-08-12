@@ -16,8 +16,11 @@ def base64_encode(str_data):
     Encode binary data to Base64 string
     将二进制数据编码为Base64字符串
     """
-    # Convert string to bytes for processing
-    str_bytes = str_data.encode('latin1')
+    # 接受 str 或 bytes 输入
+    if isinstance(str_data, str):
+        str_bytes = str_data.encode('latin1')
+    else:
+        str_bytes = bytes(str_data)
     str_len = len(str_bytes)
     
     # Calculate encoded length - 计算编码后的长度
