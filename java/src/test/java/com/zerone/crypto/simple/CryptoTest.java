@@ -90,6 +90,20 @@ public class CryptoTest {
         assertEquals("hello!!", new String(AES.decryptECB(AES.encryptECB("hello!!".getBytes(), key), key)));
     }
 
+    @Test
+    public void testChaCha20() {
+        byte[] key = hex("000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F");
+        byte[] nonce = hex("0000000900004A0000000031");
+        byte[] plain = ("Ladies and Gentlemen of the class of '99: If I could offer you "
+                + "only one tip for the future, sunscreen would be it.")
+                .getBytes(StandardCharsets.US_ASCII);
+        byte[] expect = hex("6E2E359A2568F98041BA0728DD0D6981E97E7AEC1D4360C20A27AFCCFD9FAE0B"
+                + "F91B65C5524733AB8F593DABCD62B3571639D624E65152AB8F530C359F0861D8"
+                + "07CA0DBF500D6A6156A38E088A22B65E52BC514D16CCF806818CE91AB7793736"
+                + "5AF90BBF74A35BE6B40B8EEDF2785E42874D");
+        assertArrayEquals(expect, ChaCha20.chacha20Crypt(key, nonce, 1, plain));
+    }
+
     private static byte[] hex(String s) {
         byte[] out = new byte[s.length() / 2];
         for (int i = 0; i < out.length; i++)

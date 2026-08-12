@@ -147,7 +147,7 @@ public final class ChaCha20 {
         final byte[] plain = "Ladies and Gentlemen of the class of '99: If I could offer you only one tip for the future, sunscreen would be it."
                 .getBytes(java.nio.charset.StandardCharsets.US_ASCII);
         final byte[] expect = hexStringToByteArray(
-                "6E2E359A2568F98041BA0728DD0D6981E97E7AEC1D4360C20A27AFFCD9FAE0BF91B65C5524733AB8F593DAB62CD2BB0992704736F61E9C05D0B6BC3E36F29856F1342115E901F9EA852A430304AA46B564FB4F037468B5E5F3604342529252291873C57F3EE8D08B36E4E45B5C408");
+                "6E2E359A2568F98041BA0728DD0D6981E97E7AEC1D4360C20A27AFCCFD9FAE0BF91B65C5524733AB8F593DABCD62B3571639D624E65152AB8F530C359F0861D807CA0DBF500D6A6156A38E088A22B65E52BC514D16CCF806818CE91AB77937365AF90BBF74A35BE6B40B8EEDF2785E42874D");
         final byte[] cipher = chacha20Crypt(key, nonce, counter, plain);
         final boolean ok = java.util.Arrays.equals(cipher, expect);
         System.out.println("RFC 7539 A.1: " + (ok ? "PASS" : "FAIL"));

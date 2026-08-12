@@ -23,6 +23,7 @@ from simple import aes as s_aes
 from simple import base64 as s_base64
 from simple import hmac_sha256 as s_hmac
 from simple import md2 as s_md2
+from simple import chacha20 as s_chacha
 
 import hashlib
 import base64 as std_base64
@@ -92,6 +93,21 @@ def run_all():
     from stdlib import hmac_sha256 as h
     check("hmac_sha256 (stdlib)", h.hmac_sha256_hex(key, msg), want, fails)
     check("hmac_sha256 (simple)", s_hmac.hmac_sha256_hex(key, msg), want, fails)
+
+    # ChaCha20 (RFC 7539 A.1) — 流密码已知答案测试
+    cc_key = bytes.fromhex("000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f")
+    cc_nonce = bytes.fromhex("0000000900004a0000000031")
+    cc_plain = b"Ladies and Gentlemen of the class of '99: If I could offer you only one tip for the future, sunscreen would be it."
+    cc_expect = ("6e2e359a2568f98041ba0728dd0d6981e97e7aec1d4360c20a27afccfd9fae0b"
+                 "f91b65c5524733ab8f593dabcd62b3571639d624e65152ab8f530c359f0861d8"
+                 "07ca0dbf500d6a6156a38e088a22b65e52bc514d16ccf806818ce91ab7793736"
+                 "5af90bbf74a35be6b40b8eedf2785e42874d")
+    check("chacha20 RFC7539 A.1 (simple)",
+          s_chacha.chacha20_crypt(cc_key, cc_nonce, 1, cc_plain).hex(), cc_expect, fails)
+    # 往返自反: 加密后再用相同参数解密应还原明文
+    cc_dec = s_chacha.chacha20_crypt(cc_key, cc_nonce, 1,
+                                     s_chacha.chacha20_crypt(cc_key, cc_nonce, 1, cc_plain))
+    check("chacha20 roundtrip", cc_dec, cc_plain, fails)
 
     return fails
 
