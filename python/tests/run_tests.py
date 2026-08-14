@@ -94,7 +94,7 @@ def run_all():
     check("hmac_sha256 (stdlib)", h.hmac_sha256_hex(key, msg), want, fails)
     check("hmac_sha256 (simple)", s_hmac.hmac_sha256_hex(key, msg), want, fails)
 
-    # ChaCha20 (RFC 7539 A.1) — 流密码已知答案测试
+    # ChaCha20 (RFC 7539 §2.4.2) — 流密码已知答案测试
     cc_key = bytes.fromhex("000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f")
     cc_nonce = bytes.fromhex("0000000900004a0000000031")
     cc_plain = b"Ladies and Gentlemen of the class of '99: If I could offer you only one tip for the future, sunscreen would be it."
@@ -102,12 +102,23 @@ def run_all():
                  "f91b65c5524733ab8f593dabcd62b3571639d624e65152ab8f530c359f0861d8"
                  "07ca0dbf500d6a6156a38e088a22b65e52bc514d16ccf806818ce91ab7793736"
                  "5af90bbf74a35be6b40b8eedf2785e42874d")
-    check("chacha20 RFC7539 A.1 (simple)",
+    check("chacha20 RFC7539 §2.4.2 (simple)",
           s_chacha.chacha20_crypt(cc_key, cc_nonce, 1, cc_plain).hex(), cc_expect, fails)
     # 往返自反: 加密后再用相同参数解密应还原明文
     cc_dec = s_chacha.chacha20_crypt(cc_key, cc_nonce, 1,
                                      s_chacha.chacha20_crypt(cc_key, cc_nonce, 1, cc_plain))
     check("chacha20 roundtrip", cc_dec, cc_plain, fails)
+
+    # stdlib 一致性: 与 simple 手写实现结果应完全一致
+    from stdlib import md5 as l_md5
+    from stdlib import sha1 as l_sha1
+    from stdlib import sha256 as l_sha256
+    from stdlib import chacha20 as l_chacha
+    check("stdlib vs simple md5", l_md5.md5_hex(data), s_md5.md5_hex(data), fails)
+    check("stdlib vs simple sha1", l_sha1.sha1_hex(data), s_sha1.sha1_hex(data), fails)
+    check("stdlib vs simple sha256", l_sha256.sha256_hex(data), s_sha256.sha256_hex(data), fails)
+    check("chacha20 RFC7539 §2.4.2 (stdlib)",
+          l_chacha.chacha20_crypt(cc_key, cc_nonce, 1, cc_plain).hex(), cc_expect, fails)
 
     return fails
 
