@@ -5,10 +5,8 @@ stdlib/chacha20.py — 标准库 ChaCha20 对照版
 依赖: cryptography 包（多数环境需手动安装），否则 fallback 到 simple 模块
 """
 
-import sys
-
 def chacha20_crypt(key: bytes, nonce: bytes, counter: int, plaintext: bytes) -> bytes:
-    """ChaCha20 加密/解密
+    """ChaCha20 加密/解密（RFC 7539 IETF 变体）
 
     Args:
         key (32B): 256-bit 密钥
@@ -19,19 +17,24 @@ def chacha20_crypt(key: bytes, nonce: bytes, counter: int, plaintext: bytes) -> 
     Returns:
         cipher bytes
 
-    Raises:
-        ImportError (若 cryptography 不可用)
+    Notes:
+        优先使用 cryptography 包的 RFC 7539 实现；其不可用或不兼容时
+        自动回退到 simple 模块的手写实现。
     """
-    # 尝试使用 cryptography
-    from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-    from cryptography.hazmat.backends import default_backend
     try:
-        cipher = Cipher(algorithms.ChaCha20(key, nonce), mode=None, backend=default_backend())
+        from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+        # cryptography >= 43 原生支持 IETF 变体（12 字节 nonce + 32 位计数器）
+        try:
+            algo = algorithms.ChaCha20(key, nonce, counter=counter)
+        except TypeError:
+            # 旧版 cryptography 不支持 counter 参数，回退到手写实现
+            from simple.chacha20 import chacha20_crypt as _pure
+            return _pure(key, nonce, counter, plaintext)
+        cipher = Cipher(algo, mode=None)
         encryptor = cipher.encryptor()
         return encryptor.update(plaintext) + encryptor.finalize()
-    except Exception as e:
-        # fallback 到 simple 实现
-        print(f"Warning: cryptography 失败 ({e}), 回退 to simple.", file=sys.stderr)
+    except (ImportError, ValueError):
+        # cryptography 未安装或不支持该 nonce 长度时，回退到手写实现
         from simple.chacha20 import chacha20_crypt as _pure
         return _pure(key, nonce, counter, plaintext)
 
@@ -41,7 +44,7 @@ if __name__ == "__main__":
     NONCE = bytes.fromhex("0000000900004A0000000031")
     COUNTER = 1
     PLAIN = b"Ladies and Gentlemen of the class of '99: If I could offer you only one tip for the future, sunscreen would be it."
-    EXPECT = bytes.fromhex("6E2E359A2568F98041BA0728DD0D6981E97E7AEC1D4360C20A27AFFCD9FAE0BF91B65C5524733AB8F593DAB62CD2BB0992704736F61E9C05D0B6BC3E36F29856F1342115E901F9EA852A430304AA46B564FB4F037468B5E5F3604342529252291873C57F3EE8D08B36E4E45B5C408")
+    EXPECT = bytes.fromhex("6E2E359A2568F98041BA0728DD0D6981E97E7AEC1D4360C20A27AFCCFD9FAE0BF91B65C5524733AB8F593DABCD62B3571639D624E65152AB8F530C359F0861D807CA0DBF500D6A6156A38E088A22B65E52BC514D16CCF806818CE91AB77937365AF90BBF74A35BE6B40B8EEDF2785E42874D")
     cipher = chacha20_crypt(KEY, NONCE, COUNTER, PLAIN)
     print("ciphertext(hex):", binascii.hexlify(cipher).decode())
-    print("match RFC A.1:", "OK" if cipher == EXPECT else "FAIL")
+    print("match RFC 7539 §2.4.2:", "OK" if cipher == EXPECT else "FAIL")
