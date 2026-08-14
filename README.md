@@ -76,6 +76,13 @@ python python/simple/caesar.py "Hello" 3
 python python/simple/md5.py "hello"
 ```
 
+`stdlib/` 封装优先使用标准库/第三方库(如 `cryptography`、hashlib),缺失时自动回退到 `simple/`,可同样作为脚本运行:
+
+```bash
+python python/stdlib/md5.py "hello"          # 走 hashlib
+python python/stdlib/chacha20.py             # 走 cryptography,未安装则回退 simple
+```
+
 ### Java
 
 ```bash

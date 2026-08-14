@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install dependencies
-        run: pip install pytest pytest-cov || true
+        run: pip install pytest pytest-cov cryptography || true
       - name: Run tests
         run: |
           cd python
