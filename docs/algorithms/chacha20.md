@@ -69,7 +69,7 @@ ChaCha20 做 **10 次双轮**（共 20 次 QR），每次包含：
 | Python stdlib | `python/stdlib/chacha20.py` | `cryptography` 包，fallback simple |
 | Java | `java/.../simple/ChaCha20.java` | 标准流密码异或调用(纯手写) |
 
-## 6. KAT 测试向量（RFC 7539 附录 A.1）
+## 6. KAT 测试向量（RFC 7539 §2.4.2 Sunscreen 示例）
 
 ```text
 Key   = 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f
@@ -77,7 +77,7 @@ Key   = 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f
 Nonce = 00 00 00 09 00 00 4a 00 00 00 00 31
 Counter = 1
 
-Plain (114 bytes）= "Ladies and Gentlemen of the class of '99: If I could offer you only one tip for the future, sunscreen would be it."
+Plain (114 bytes) = "Ladies and Gentlemen of the class of '99: If I could offer you only one tip for the future, sunscreen would be it."
 
 Cipher (hex) = 6E2E359A2568F98041BA0728DD0D6981E97E7AEC1D4360C20A27AFCCFD9FAE0BF91B65C5524733AB8F593DABCD62B3571639D624E65152AB8F530C359F0861D807CA0DBF500D6A6156A38E088A22B65E52BC514D16CCF806818CE91AB77937365AF90BBF74A35BE6B40B8EEDF2785E42874D
 ```
@@ -85,7 +85,7 @@ Cipher (hex) = 6E2E359A2568F98041BA0728DD0D6981E97E7AEC1D4360C20A27AFCCFD9FAE0BF
 ## 7. 参考
 
 - RFC 7539 (ChaCha20 and Poly1305 for IETF Protocols)
-- [Wikipedia: ChaCha20](https://en.wikipedia.org/wiki/Salsa20)
+- [Wikipedia: ChaCha20](https://en.wikipedia.org/wiki/ChaCha20)
 
 ## 8. 最小可运行示例 (C)
 
